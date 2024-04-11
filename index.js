@@ -1,4 +1,4 @@
-
+ 
 // const baseUrl = "http://api.shinemonitor.com/public/";
 const baseUrl = "http://android.shinemonitor.com/public/";
 
@@ -26,6 +26,31 @@ async function main() {
 
     console.log(await makeGetRequest(authReqUrl));
 
+}
+
+async function getInfo() {
+
+    const paramValues = getParamValues();
+    const tokenValues = getTokenValues();
+    console.log("tokenValues", tokenValues);
+
+    const salt = paramValues.salt;
+    console.log("salt", salt);
+    const source = paramValues.source;
+    const appClient = paramValues.appClient;
+    const appId = paramValues.appId;
+    const appVersion = paramValues.appVersion;
+    const secret = tokenValues.dat.secret;
+    const token = tokenValues.dat.token;
+    console.log("secret", secret);
+    console.log("token", token);
+    const sign = await sha1(`${salt}${secret}${token}&action=`);
+    console.log("sign", sign);
+    const authReqUrl = `${baseUrl}?sign=${sign}&salt=${salt}&token=${token}&action=&source=${source}&_app_client_=${appClient}&_app_id_=${appId}&_app_version_=${appVersion}`;
+    console.log("authReqUrl", authReqUrl);
+
+    console.log(await makeGetRequest(authReqUrl));
+    
 }
 
 async function sha1(str) {
@@ -66,4 +91,5 @@ async function makeWebRequest(url, options) {
     }
 }
 
-main();
+// main();
+getInfo();
