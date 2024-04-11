@@ -1,5 +1,6 @@
 
-const baseUrl = "http://api.shinemonitor.com/public/";
+// const baseUrl = "http://api.shinemonitor.com/public/";
+const baseUrl = "http://android.shinemonitor.com/public/";
 
 async function main() {
 
@@ -7,7 +8,8 @@ async function main() {
 
     const usr = paramValues.usr;
     const password = paramValues.password;
-    const salt = new Date().getTime();
+    // const salt = new Date().getTime();
+    const salt = paramValues.salt;
     console.log("salt", salt);
     const companyKey = paramValues.companyKey;
     const source = paramValues.source;
@@ -16,10 +18,10 @@ async function main() {
     const appVersion = paramValues.appVersion;
     const shaOfPassword = await sha1(password);
     console.log("shaOfPassword", shaOfPassword);
-    const sign = await sha1(`${salt}${shaOfPassword}&action=auth&usr=${usr}&company-key=${companyKey}`);
+    // const sign = await sha1(`${salt}${shaOfPassword}&action=authSource&usr=${usr}&company-key=${companyKey}`);
+    const sign = paramValues.sign;
     console.log("sign", sign);
-
-    const authReqUrl = `${baseUrl}?sign=${sign}&salt=${salt}&action=auth&usr=${usr}&company-key=${companyKey}&source=${source}&_app_client_=${appClient}&_app_id_=${appId}&_app_version_=${appVersion}`;
+    const authReqUrl = `${baseUrl}?sign=${sign}&salt=${salt}&action=authSource&usr=${usr}&company-key=${companyKey}&i18n=en_US&lang=en_US&source=${source}&_app_client_=${appClient}&_app_id_=${appId}&_app_version_=${appVersion}`;
     console.log("authReqUrl", authReqUrl);
 
     console.log(await makeGetRequest(authReqUrl));

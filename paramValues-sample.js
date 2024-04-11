@@ -6,6 +6,9 @@ function getParamValues() {
         source: "",
         appClient: "",
         appId: "",
-        appVersion: ""
+        appVersion: "",
+        //temp
+        salt:"",
+        sign:""
     };
 }
